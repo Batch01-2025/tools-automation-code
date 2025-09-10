@@ -4,3 +4,4 @@ variable "ami" {
   default = "ami-0dfc569a8686b9320"
 }
 variable "ports" {}
+variable "policy_name" {}

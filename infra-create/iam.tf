@@ -23,26 +23,28 @@ resource "aws_iam_instance_profile" "main" {
   name = "${var.name}-role"
   role = aws_iam_role.main.name
 }
-resource "aws_iam_policy" "main" {
-  name        = "${var.name}-role-policy"
-  path        = "/"
-  description = "${var.name}-role-policy"
+# resource "aws_iam_policy" "main" {
+#   name        = "${var.name}-role-policy"
+#   path        = "/"
+#   description = "${var.name}-role-policy"
+#
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = [
+#           "ec2:Describe*",
+#         ]
+#         Effect   = "Allow"
+#         Resource = "*"
+#       },
+#     ]
+#   })
+# }
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ec2:Describe*",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
-}
-
-resource "aws_iam_policy_attachment" "main" {
+resource "aws_iam_policy_attachment" "policy-attch" {
+  name       = "${var.name}-policy-attach"
+  count      = length(var.policy_name)
   roles      = [aws_iam_role.main.name]
-  policy_arn = aws_iam_policy.main.arn
+  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
 }
