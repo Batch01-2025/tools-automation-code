@@ -16,3 +16,6 @@ variable "tool"{
     }
   }
 }
+variable volume_size {
+  type = number
+}
