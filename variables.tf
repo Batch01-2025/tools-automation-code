@@ -4,7 +4,7 @@ variable "tool"{
       instance_type = "t2.small"
       policy_name = "AdministratorAccess"
       ports = {}
-      volume-size = 30
+      volume_size = 30
     }
     vault = {
       instance_type = "t2.small"
@@ -12,7 +12,7 @@ variable "tool"{
       ports = {
         vault = 8200
       }
-      volume-size = 15
+      volume_size = 15
     }
   }
 }
