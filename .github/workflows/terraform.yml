@@ -1,0 +1,11 @@
+name: Provision Tools Infra
+on: [workflow_dispatch]
+jobs:
+  Provision:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Terraform init
+        run: terraform init
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
