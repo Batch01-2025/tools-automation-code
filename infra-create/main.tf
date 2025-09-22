@@ -1,3 +1,4 @@
+# instance creation
 resource "aws_instance" "tool" {
   ami                       = var.ami
   instance_type             = var.instance_type
