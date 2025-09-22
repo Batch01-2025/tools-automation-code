@@ -5,3 +5,4 @@ variable "ami" {
 }
 variable "ports" {}
 variable "policy_name" {}
+variable "key_name" {}

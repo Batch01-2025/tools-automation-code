@@ -1,11 +1,4 @@
 variable "tool" {
-  description = "Map of tools with instance details"
-  type = map(object({
-    instance_type = string
-    policy_name   = list(string)
-    ports         = map(number)
-    volume_size   = number
-  }))
 
   default = {
     github-runner = {
@@ -25,3 +18,4 @@ variable "tool" {
     }
   }
 }
+variable "key_name" {}
