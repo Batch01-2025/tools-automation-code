@@ -2,18 +2,32 @@ data "aws_key_pair" "key" {
   key_name = var.key_name
 }
 
+data "aws_vpc" "vpc" {
+  default = true
+}
+
 data "aws_ami" "rhel9" {
   most_recent     = true
-  name_regex      = "Red Hat Enterprise Linux 9 (HVM), SSD Volume Type"
-  architecture    = "x86_64"
-  owners          = ["959620655822"]
+  owners          = ["309956199498"]  # Official Account ID for Redhat
 
   filter {
-    name   = "Red Hat Enterprise Linux version 9 (HVM), EBS General Purpose (SSD) Volume Type"
-    values = ["ami-*"]
+    name   = "name"
+    values = ["RHEL-9"]
   }
 
-}
-output "ami_id" {
-  value = data.aws_ami.rhel9.id
+  filter {
+    name = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
+  }
+
 }
