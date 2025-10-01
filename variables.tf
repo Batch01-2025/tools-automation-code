@@ -18,4 +18,6 @@ variable "tool" {
     }
   }
 }
-variable "key_name" {}
+variable "key_name" {
+  default = "ec2-B1key"
+}
