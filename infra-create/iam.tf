@@ -1,5 +1,5 @@
 resource "aws_iam_role" "main" {
-  name = "${var.name}-role"
+  name = "${var.name}-role-b1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,11 +16,11 @@ resource "aws_iam_role" "main" {
   })
 
   tags = {
-    tag-key = "${var.name}-role"
+    tag-key = "${var.name}-role-b1"
   }
 }
 resource "aws_iam_instance_profile" "main" {
-  name = "${var.name}-role"
+  name = "${var.name}-role-b1"
   role = aws_iam_role.main.name
 
 }
