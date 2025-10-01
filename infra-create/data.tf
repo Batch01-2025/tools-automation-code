@@ -12,7 +12,7 @@ data "aws_ami" "rhel9" {
 
   filter {
     name   = "name"
-    values = ["RHEL-9"]
+    values = ["RHEL-9*"]
   }
 
   filter {
