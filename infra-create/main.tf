@@ -40,7 +40,8 @@ resource "aws_instance" "tool" {
 
 resource "aws_security_group" "tool-sg" {
   name        = "${var.name}-sg"
-  description = "Allow inbound traffic and all outbound traffic"
+  description = "${var.name}-sg"
+  vpc_id      = data.aws_vpc.vpc.id
 
   tags = {
     Name = "${var.name}-sg"
