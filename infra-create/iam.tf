@@ -19,6 +19,7 @@ resource "aws_iam_role" "main" {
     tag-key = "${var.name}-role-b1"
   }
 }
+
 resource "aws_iam_instance_profile" "main" {
   name = "${var.name}-role-b1"
   role = aws_iam_role.main.name

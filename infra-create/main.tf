@@ -26,7 +26,7 @@ resource "aws_instance" "tool" {
 
     #  Install Basic Utilities
 
-    sudo dnf install vim wget git unzip net-tools bind-utils telnet traceroute nmap htop tree bash-completion iputils python3.11-pip -y
+    sudo dnf install vim wget git unzip net-tools bind-utils telnet yum-utils traceroute nmap htop tree bash-completion iputils python3.11-pip -y
 
     # Security & Networking Tools
     sudo dnf install -y tcpdump openssl openssh-clients

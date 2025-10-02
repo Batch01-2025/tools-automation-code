@@ -1,0 +1,105 @@
+---
+# Ansible Code
+
+# Following steps need to be run manually
+# sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
+# sudo dnf install gh -y
+# gh auth login -s admin:org
+
+#- name: Set the Hostname
+#  ansible.builtin.hostname:
+#    name: github-runner
+#
+
+- name: Add the Github-runner User
+  ansible.builtin.user:
+    name: grunner
+
+- name: Create a new directory
+  ansible.builtin.file:
+    path: /actions-runner
+    state: directory
+    owner: grunner
+    group: grunner
+
+- name: Extract and Download Github-Runner
+  ansible.builtin.unarchive:
+    src: https://github.com/actions/runner/releases/download/v2.328.0/actions-runner-linux-x64-2.328.0.tar.gz # The path to the downloaded archive
+    dest: /actions-runner # The destination directory for extracted files
+    remote_src: yes # Indicates that the source file is on the remote machine
+    owner: grunner
+    group: grunner
+
+- name: To Grab a Token
+  ansible.builtin.shell:
+    cmd: >
+         gh api \
+         --method POST \
+         -H "Accept: application/vnd.github+json" \
+         orgs/Batch01-2025/actions/runners/registration-token \
+         --jq .token
+    register: token
+    become_user: ec2-user # to fetch this token using ec2-user as its used for gh to login to github.
+
+- name: Install github-Runner Dependencies
+  ansible.builtin.dnf:
+    name:
+      - libicu
+      - curl
+      - tar
+      - xz
+      - zlib
+      - glibc
+    state: present
+
+- name: Configure the Github Runner
+  ansible.builtin.shell:
+    cmd: >
+      ./config.sh
+      --url https://github.com/Batch01-2025/tools-automation-code
+      --token {{ token.stdout}}
+      --runnergroup Default
+      --name batch01
+      --labels rhel
+      --work _work
+      --replace
+      --unattended
+    args:
+      chdir: /action-runner
+    become: true
+    become_user: grunner
+
+
+- name: Update the Path
+  ansible.builtin.copy:
+    src: path
+    dest: /action-runner/.path
+    owner: grunner
+    group: grunner
+    mode: "0644"
+  become: true
+  become_user: grunner
+      
+- name: Install the Github Service
+  ansible.builtin.shell:
+    cmd: ./svc.sh install; ./svc.sh start
+  args:
+    chdir: /action-runner
+  become: true
+  become_user: grunner
+
+- name: Download the Terraform Repo file
+  ansible.builtin.geturl:
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+
+- name: Install Terraform
+  ansible.builtin.yum:
+    name: terraform
+    state: present
+
+- name: Install Ansible using pip3.11
+  ansible.builtin.pip:
+    name: ansible
+    executable: pip3.11
+
