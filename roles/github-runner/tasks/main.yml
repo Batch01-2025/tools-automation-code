@@ -30,7 +30,7 @@
     owner: grunner
     group: grunner
 
-- name: To Grab a Token
+- name: To Grab a Token from github
   ansible.builtin.shell: |
        gh api --method POST -H "Accept: application/vnd.github+json" \
        orgs/Batch01-2025/actions/runners/registration-token --jq .token
