@@ -62,8 +62,8 @@
       --unattended
     args:
       chdir: /action-runner
-    become: true
-    become_user: grunner
+  become: true
+  become_user: grunner
 
 
 - name: Update the Path
