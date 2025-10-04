@@ -60,8 +60,8 @@
       --work _work
       --replace
       --unattended
-    args:
-      chdir: /action-runner
+  args:
+    chdir: /action-runner
   become: true
   become_user: grunner
 
