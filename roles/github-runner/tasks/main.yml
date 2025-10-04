@@ -89,7 +89,7 @@
   become_user: grunner
 
 - name: Download the Terraform Repo file
-  ansible.builtin.geturl:
+  ansible.builtin.get_url:
     url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     dest: /etc/yum.repos.d/hashicorp.repo
 
