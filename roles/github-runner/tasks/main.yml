@@ -31,13 +31,9 @@
     group: grunner
 
 - name: To Grab a Token
-  ansible.builtin.shell:
-    cmd: >
-         gh api \
-         --method POST \
-         -H "Accept: application/vnd.github+json" \
-         orgs/Batch01-2025/actions/runners/registration-token \
-         --jq .token
+  ansible.builtin.shell: |
+       gh api --method POST -H "Accept: application/vnd.github+json" \
+       orgs/Batch01-2025/actions/runners/registration-token --jq .token
   register: token
   become_user: ec2-user # to fetch this token using ec2-user as its used for gh to login to github.
 
