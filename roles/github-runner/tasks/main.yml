@@ -53,7 +53,7 @@
     cmd: >
       ./config.sh
       --url https://github.com/Batch01-2025/tools-automation-code
-      --token {{ token.stdout}}
+      --token {{ token.stdout }}
       --runnergroup Default
       --name batch01
       --labels rhel
