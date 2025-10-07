@@ -61,7 +61,7 @@
       --replace
       --unattended
   args:
-    chdir: /action-runner
+    chdir: /actions-runner
   become: true
   become_user: grunner
 
@@ -69,7 +69,7 @@
 - name: Update the Path
   ansible.builtin.copy:
     src: path
-    dest: /action-runner/.path
+    dest: /actions-runner/.path
     owner: grunner
     group: grunner
     mode: "0644"
@@ -80,7 +80,7 @@
   ansible.builtin.shell:
     cmd: ./svc.sh install; ./svc.sh start
   args:
-    chdir: /action-runner
+    chdir: /actions-runner
   become: true
   become_user: grunner
 
