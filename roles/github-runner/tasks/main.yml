@@ -73,7 +73,7 @@
       | jq '.runners[] | select(.name == "batch01") | .status'
       | xargs
   register: runner_status
-  become: true
+  become: yes
   become_user: ec2_user
 
 - name: Check if Runner is already Configured Locally
