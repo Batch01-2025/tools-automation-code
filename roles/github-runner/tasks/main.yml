@@ -34,9 +34,9 @@
 - name: To Grab a Token from github
   ansible.builtin.shell: |
     gh api --method POST \
-    -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-     orgs/Batch01-2025/actions/runners/registration-token \
+      -H "Accept: application/vnd.github+json" \
+      -H "X-GitHub-Api-Version: 2022-11-28" \
+      orgs/Batch01-2025/actions/runners/registration-token \
     | jq -r .token
   register: token
   become_user: ec2-user # to fetch this token using ec2-user as its used for gh to login to github.
@@ -63,18 +63,6 @@
   register: runner_count
   become_user: ec2-user
 
-#- name: Get the Runner Status
-#  ansible.builtin.shell:
-#    cmd: >
-#      gh api
-#      -H 'Accept: application/vnd.github+json'
-#      -H 'X-GitHub-Api-Version: 2022-11-28'
-#      orgs/Batch02-2025/actions/runners
-#      | jq '.runners[] | select(.name == "batch01") | .status'
-#      | xargs
-#  register: runner_status
-#  become: yes
-#  become_user: ec2_user
 
 - name: Get the runner Status
   ansible.builtin.shell:
@@ -88,17 +76,16 @@
   register: runner_config
 
 - name: Configure the Github Runner
-  ansible.builtin.shell:
-    cmd: >
-      ./config.sh
-      --url https://github.com/Batch01-2025/tools-automation-code
-      --token {{ token.stdout }}
-      --runnergroup Default
-      --name batch01
-      --labels rhel
-      --work _work
-      --replace
-      --unattended
+  ansible.builtin.shell: >
+    ./config.sh
+    --url https://github.com/Batch01-2025
+    --token {{ token.stdout }}
+    --runnergroup Default
+    --name batch01
+    --labels rhel
+    --work _work
+    --replace
+    --unattended
   args:
     chdir: /actions-runner
   become: true
