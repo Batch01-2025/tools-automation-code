@@ -107,12 +107,13 @@
     - runner_count.stdout == "0" or runner_status.stdout == "offline"
 
 - name: Install the Github Service
-  ansible.builtin.shell:
-    cmd: ./svc.sh install; ./svc.sh start
+  ansible.builtin.shell: |
+    sudo ./svc.sh install 
+    sudo ./svc.sh start
   args:
     chdir: /actions-runner
-  become: true
-  become_user: grunner
+#  become: true
+#  become_user: grunner
   when:
     - runner_count.stdout == "0" or runner_status.stdout == "offline"
 
