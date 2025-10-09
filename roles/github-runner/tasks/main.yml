@@ -112,7 +112,7 @@
   args:
     chdir: /actions-runner
   become: true
-  become_user: grunner
+#  become_user: grunner
   when:
     - runner_count.stdout == "0" or runner_status.stdout == "offline"
 
